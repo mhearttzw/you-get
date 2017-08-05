@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+#precise control module imported content
 __all__ = ['bilibili_download']
 
 from ..common import *
@@ -14,9 +15,10 @@ import re
 appkey = 'f3bb208b3d081dc8'
 SECRETKEY_MINILOADER = '1c15888dc316e05a15fdd0a02ed6584f'
 
+#srt: SubRip Text
 def get_srt_xml(id):
     url = 'http://comment.bilibili.com/%s.xml' % id
-    return get_html(url)
+    return get_html(url) #definition in common.py
 
 
 def parse_srt_p(p):
@@ -42,6 +44,7 @@ def parse_srt_p(p):
 
     font_size = int(font_size)
 
+    #string formating operations %
     font_color = '#%06x' % int(font_color)
 
     return pool, mode, font_size, font_color
@@ -57,8 +60,14 @@ def parse_srt_xml(xml):
 def parse_cid_playurl(xml):
     from xml.dom.minidom import parseString
     try:
-        doc = parseString(xml.encode('utf-8'))
+        doc = parseString(xml.encode('utf-8'))   #parse a file into a dom from a string
         urls = [durl.getElementsByTagName('url')[0].firstChild.nodeValue for durl in doc.getElementsByTagName('durl')]
+        #add code
+        path= "../data/urls"
+        fp= open(path, 'w')
+        for item in urls:
+            fp.write(url)
+            fp.write('\n')
         return urls
     except:
         return []
